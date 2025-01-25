@@ -11,10 +11,10 @@ export default {
     ],
 
     theme: {
-        colors: {
-            'railway': '#010861'
-        },
         extend: {
+            colors: {
+                'railway': '#010861'
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },

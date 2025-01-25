@@ -15,10 +15,16 @@ class Media extends Model
         'title',
         'description',
         'order',
+        'type'
     ];
 
     public function mediable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function getFullUrl()
+    {
+        return url('storage/' . $this->file_path);
     }
 }

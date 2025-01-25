@@ -516,8 +516,9 @@ const removeBranch = (subCompanyIndex, branchIndex) => {
 
 // Form submission
 const submit = () => {
-    form.post(route('companies.store'), {
+    form.post(route('admin.companies.store'), {
         onSuccess: () => {
+            console.log("i am submitted");
             // Clear all preview URLs to prevent memory leaks
             Object.values(mediaPreview.value.company).forEach(URL.revokeObjectURL)
             Object.values(mediaPreview.value.subCompanies).forEach(previews =>

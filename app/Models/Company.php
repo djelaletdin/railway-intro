@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Str;
 
 class Company extends Model
 {
@@ -38,5 +39,19 @@ class Company extends Model
     public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');
+    }
+
+    public static function generateUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $originalSlug = $slug;
+
+        $counter = 1;
+        while (self::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 }

@@ -5,43 +5,42 @@ import { Carousel, Slide, Navigation } from 'vue3-carousel';
 
 const props = defineProps({
     company: Object,
-    subCompanies: Object
+    subCompanies: Object,
+    media: Object
 });
 
 const carouselConfig = {
-    itemsToShow: 1.2,
+    itemsToShow: 1.1,
     wrapAround: true,
     gap: 10,
 }
 </script>
 
 <template>
+
     <Head :title="company?.name || 'Company'"/>
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <div class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
+        <div class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20]">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                <div class="carousel-wrapper">
+                <div v-if="!(media.length<=0)" class="carousel-wrapper">
                     <Carousel v-bind="carouselConfig">
-                        <Slide v-for="slide in 10" :key="slide">
-                            <div class="carousel__item">
+                        <Slide v-for="slide in media" :key="slide">
+                            <div class="carousel__item relative w-full h-full overflow-hidden">
                                 <img
-                                    :src="`https://fakeimg.pl/600x400`"
-                                    :alt="`Slide ${slide}`"
-                                    class="slide-image"
+                                    :src="slide"
+                                    class="slide-image w-full h-full object-cover"
                                 />
-                                <div class="slide-number">{{ slide }}</div>
                             </div>
                         </Slide>
 
-
-
                         <template #addons>
-                            <Navigation />
-                            <Pagination />
+                            <Navigation class="navigation" />
+<!--                            <Pagination />-->
                         </template>
                     </Carousel>
-                    {{ company.description }}
+
                 </div>
+                {{ company.description }}
             </div>
         </div>
     </div>
