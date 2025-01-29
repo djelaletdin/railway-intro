@@ -2,9 +2,11 @@
 import { Head } from "@inertiajs/vue3";
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
+import AttributesCardComponent from "@/Components/AttributesCardComponent.vue";
 
 const props = defineProps({
     company: Object,
+    logo: String,
     subCompanies: Object,
     media: Object
 });
@@ -13,16 +15,23 @@ const carouselConfig = {
     itemsToShow: 1.1,
     wrapAround: true,
     gap: 10,
+    // autoplay: 5000,
 }
 </script>
 
 <template>
 
     <Head :title="company?.name || 'Company'"/>
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <div class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20]">
-            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                <div v-if="!(media.length<=0)" class="carousel-wrapper">
+    <div class=" text-black/50 dark:bg-black dark:text-white/50">
+        <div class="relative flex flex-col items-center justify-center">
+            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl mt-10">
+                <div class="flex gap-4 items-center ">
+                    <img
+                        :src="logo"
+                        class="h-32"
+                    />
+                </div>
+                <div v-if="!(media.length<=0)" class="carousel-wrapper my-5">
                     <Carousel v-bind="carouselConfig">
                         <Slide v-for="slide in media" :key="slide">
                             <div class="carousel__item relative w-full h-full overflow-hidden">
@@ -40,7 +49,21 @@ const carouselConfig = {
                     </Carousel>
 
                 </div>
-                {{ company.description }}
+                <div class="my-16">
+                    <span class="font-black text-4xl text-black mb-8 block">
+                        {{ company.name }}
+                    </span>
+
+                    <p class="text-gray-700 text-xl whitespace-pre-line first-letter:text-3xl first-letter:font-bold first-line:tracking-wide mb-8">
+                        {{ company.content }}
+                    </p>
+
+                    <div class="mb-8">
+                        <AttributesCardComponent :attributes="company.attributes"/>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

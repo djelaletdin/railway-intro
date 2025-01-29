@@ -26,7 +26,7 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Website</label>
-                        <input type="url" v-model="form.website"
+                        <input v-model="form.website"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         <div v-if="form.errors.website" class="text-red-500 text-sm mt-1">{{ form.errors.website }}</div>
                     </div>
@@ -46,6 +46,13 @@
                     </div>
 
                     <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Content</label>
+                        <textarea v-model="form.content" rows="3"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                        <div v-if="form.errors.content" class="text-red-500 text-sm mt-1">{{ form.errors.content }}</div>
+                    </div>
+
+                    <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Address</label>
                         <textarea v-model="form.address" rows="2"
                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
@@ -53,7 +60,7 @@
                     </div>
 
                     <!-- Company Media Section -->
-                    <div class="col-span-2">
+                    <div class="col-span-2 rounded-lg ring-1 ring-gray-200 p-8">
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Company Logo</label>
@@ -96,6 +103,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-span-2">
+                        <CompanyAttributablesForm
+                            :attributes="attributes"
+                            @update:attributes="handleAttributesUpdate"
+                        />
+                    </div>
+
                 </div>
             </div>
 
@@ -323,19 +337,35 @@
 <script setup>
 import {Head, useForm} from '@inertiajs/vue3'
 import { ref } from 'vue'
+import AttributesCardComponent from "@/Components/AttributesCardComponent.vue";
+import CompanyAttributablesForm from "@/Components/CompanyAttributablesForm.vue";
+
+
+const props = defineProps({
+    attributes: {
+        type: Array,
+        required: true,
+    },
+})
 
 // Form state
 const form = useForm({
     name: '',
     description: '',
+    content: '',
     website: '',
     email: '',
     phone: '',
     address: '',
     logo: null,
     media: [],
-    subCompanies: []
+    subCompanies: [],
+    attributes: [],
 })
+
+const handleAttributesUpdate = (attributes) => {
+    form.attributes = attributes
+}
 
 // Preview state
 const logoPreview = ref({
@@ -473,13 +503,15 @@ const addSubCompany = () => {
     form.subCompanies.push({
         name: '',
         description: '',
+        content: '',
         website: '',
         email: '',
         phone: '',
         address: '',
         logo: null,
         media: [],
-        branches: []
+        branches: [],
+        attributes: []
     })
 }
 

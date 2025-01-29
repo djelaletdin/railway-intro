@@ -20,8 +20,10 @@ class CompanyController extends Controller
     {
         $company->load([
             'media',
+            'attributes'
         ]);
-//        dd($company->media->where('type', 'logo')->map->getFullUrl());
+
+//        dd($company->attributes);
         $subCompanies = $company->subCompanies()->get();
         return Inertia::render('Company/Show', [
             'company' => $company,

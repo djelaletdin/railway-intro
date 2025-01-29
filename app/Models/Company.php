@@ -16,6 +16,7 @@ class Company extends Model
         'name',
         'slug',
         'description',
+        'content',
         'logo_path',
         'website',
         'email',
@@ -32,8 +33,7 @@ class Company extends Model
     public function attributes()
     {
         return $this->morphToMany(Attribute::class, 'attributable')
-            ->withPivot('value')
-            ->withTimestamps();
+            ->withPivot('value');
     }
 
     public function media(): MorphMany
