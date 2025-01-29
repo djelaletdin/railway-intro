@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -23,17 +24,18 @@ class CompanyController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Company/Create');
+        $attributes = Attribute::all();
+//        dd($attributes);
+        return Inertia::render('Admin/Company/Create', ['attributes' => $attributes]);
     }
 
     public function store(Request $request)
     {
 
-//        dd("i am called");
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'website' => 'nullable|url',
+//            'website' => 'nullable|url',
             'email' => 'required|email',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
@@ -65,6 +67,7 @@ class CompanyController extends Controller
                 'name' => $request->name,
                 'slug' => Company::generateUniqueSlug($request->name),
                 'description' => $request->description,
+//                'content' => $request->content,
                 'website' => $request->website,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -72,6 +75,14 @@ class CompanyController extends Controller
                 'is_active' => true,
             ]);
 //            dd("i am called");
+            if ($request->input('attributes')) {
+                foreach ($request->input('attributes', []) as $attribute) {
+                    $company->attributes()->attach(
+                        $attribute['attribute_id'],
+                        ['value' => $attribute['value']]
+                    );
+                }
+            }
 
             // Handle company logo
             if ($request->hasFile('logo')) {
