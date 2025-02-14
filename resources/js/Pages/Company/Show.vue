@@ -26,11 +26,25 @@ const carouselConfig = {
     <div class=" text-black/50 dark:bg-black dark:text-white/50">
         <div class="relative flex flex-col items-center justify-center">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl mt-10">
-                <div class="flex gap-4 items-center ">
-                    <img
-                        :src="logo"
-                        class="h-32"
-                    />
+                <div class="flex justify-between items-center">
+                    <img :src="logo" class="h-32" alt="Company Logo"/>
+
+                    <div class="hidden md:flex flex-col gap-3 text-sm">
+                        <div v-if="company.email" class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-gray-500"></i>
+                            <span>{{ company.email }}</span>
+                        </div>
+
+                        <div v-if="company.phone" class="flex items-center gap-2">
+                            <i class="fas fa-phone text-gray-500"></i>
+                            <span>{{ company.phone }}</span>
+                        </div>
+
+                        <div v-if="company.address" class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-gray-500"></i>
+                            <span class=" max-w-72">{{ company.address }}</span>
+                        </div>
+                    </div>
                 </div>
                 <div v-if="!(media.length<=0)" class="carousel-wrapper my-5">
                     <Carousel v-bind="carouselConfig">
