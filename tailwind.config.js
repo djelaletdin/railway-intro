@@ -9,7 +9,15 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
     ],
-
+    safelist: [
+        // Add Font Awesome classes you'll use
+        'fa-bolt',
+        'fa-fire',
+        'fa-heart',
+        'fa-shield',
+        'fa-sparkles',
+        // Add more as needed...
+    ],
     theme: {
         extend: {
             colors: {
