@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/vue3";
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import AttributesCardComponent from "@/Components/AttributesCardComponent.vue";
+import SubCompaniesComponent from "@/Components/SubCompaniesComponent.vue";
 
 const props = defineProps({
     company: Object,
@@ -53,7 +54,9 @@ const carouselConfig = {
                     <span class="font-black text-4xl text-black mb-8 block">
                         {{ company.name }}
                     </span>
-
+                    <span class="font-black text-2xl text-gray-400 mb-8 block">
+                        {{ company.description }}
+                    </span>
                     <p class="text-gray-700 text-xl whitespace-pre-line first-letter:text-3xl first-letter:font-bold first-line:tracking-wide mb-8">
                         {{ company.content }}
                     </p>
@@ -61,6 +64,14 @@ const carouselConfig = {
                     <div class="mb-8">
                         <AttributesCardComponent :attributes="company.attributes"/>
                     </div>
+
+                    <div class="mb-8">
+                        <h2 class="font-black text-2xl text-black mb-8 block">Şahamçalar</h2>
+                       <SubCompaniesComponent :sub-companies="subCompanies" />
+
+
+                    </div>
+
                 </div>
 
 
