@@ -9,7 +9,18 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        $companies = Company::all();
+
+
+        $companies = Company::with('logo')->get();
+
+        $companies->each(function ($company) {
+            $company->logo_url = $company->logo?->getFullUrl();
+            unset($company->media);
+        });
+
+        $companies->makeHidden('media');
+//        dd($companies);
+
         return Inertia::render('Company/Index', [
             'companies' => $companies
         ]);
@@ -24,7 +35,16 @@ class CompanyController extends Controller
         ]);
 
 //        dd($company->attributes);
-        $subCompanies = $company->subCompanies()->get();
+        $subCompanies = $company->subCompanies()->with(['media' => function ($query) {
+            $query->where('type', 'logo')->select('id', 'file_path', 'mediable_id', 'mediable_type');
+        }])->get();
+
+        $subCompanies->each(function ($subCompany) {
+            $subCompany->logo_url = $subCompany->media->where('type', 'logo')->first()?->getFullUrl();
+            unset($subCompany->media);
+        });
+
+
         return Inertia::render('Company/Show', [
             'company' => $company,
             'subCompanies' => $subCompanies,

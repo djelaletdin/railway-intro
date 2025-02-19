@@ -41,6 +41,12 @@ class Company extends Model
         return $this->morphMany(Media::class, 'mediable');
     }
 
+    public function logo()
+    {
+        return $this->hasOne(Media::class, 'mediable_id')->where('type', 'logo');
+    }
+
+
     public static function generateUniqueSlug($name)
     {
         $slug = Str::slug($name);

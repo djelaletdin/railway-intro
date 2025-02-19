@@ -4,6 +4,7 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import AttributesCardComponent from "@/Components/AttributesCardComponent.vue";
 import SubCompaniesComponent from "@/Components/SubCompaniesComponent.vue";
+import CompanyCard from "@/Components/CompanyCard.vue";
 
 const props = defineProps({
     company: Object,
@@ -21,7 +22,7 @@ const carouselConfig = {
 </script>
 
 <template>
-
+{{ logo }}
     <Head :title="company?.name || 'Company'"/>
     <div class=" text-black/50 dark:bg-black dark:text-white/50">
         <div class="relative flex flex-col items-center justify-center">
@@ -81,9 +82,14 @@ const carouselConfig = {
 
                     <div class="mb-8">
                         <h2 class="font-black text-2xl text-black mb-8 block">Şahamçalar</h2>
-                       <SubCompaniesComponent :sub-companies="subCompanies" />
-
-
+<!--                       <SubCompaniesComponent :sub-companies="subCompanies" />-->
+                        <div class="grid gap-6 lg:grid-cols-3 lg:gap-8">
+                            <CompanyCard
+                                v-for="company in subCompanies"
+                                :key="company.id"
+                                :company="company"
+                            />
+                        </div>
                     </div>
 
                 </div>
