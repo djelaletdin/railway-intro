@@ -14,8 +14,11 @@
 
                     <div class="col-span-1">
                         <label class="block text-sm font-medium text-gray-700">Website</label>
-                        <input type="url" v-model="form.website" class="mt-1 block w-full rounded-md border-gray-300">
-                        <div v-if="form.errors.website" class="text-red-500 text-sm mt-1">{{ form.errors.website }}</div>
+                        <input v-model="form.website" class="mt-1 block w-full rounded-md border-gray-300">
+                        <div v-if="form.errors.website" class="text-red-500 text-sm mt-1">{{
+                                form.errors.website
+                            }}
+                        </div>
                     </div>
 
                     <div class="col-span-1">
@@ -32,14 +35,22 @@
 
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Address</label>
-                        <textarea v-model="form.address" rows="3" class="mt-1 block w-full rounded-md border-gray-300"></textarea>
-                        <div v-if="form.errors.address" class="text-red-500 text-sm mt-1">{{ form.errors.address }}</div>
+                        <textarea v-model="form.address" rows="3"
+                                  class="mt-1 block w-full rounded-md border-gray-300"></textarea>
+                        <div v-if="form.errors.address" class="text-red-500 text-sm mt-1">{{
+                                form.errors.address
+                            }}
+                        </div>
                     </div>
 
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea v-model="form.description" rows="4" class="mt-1 block w-full rounded-md border-gray-300"></textarea>
-                        <div v-if="form.errors.description" class="text-red-500 text-sm mt-1">{{ form.errors.description }}</div>
+                        <textarea v-model="form.description" rows="4"
+                                  class="mt-1 block w-full rounded-md border-gray-300"></textarea>
+                        <div v-if="form.errors.description" class="text-red-500 text-sm mt-1">{{
+                                form.errors.description
+                            }}
+                        </div>
                     </div>
 
                     <!-- Company Media Section -->
@@ -48,12 +59,15 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Company Logo</label>
                                 <div class="mt-1 flex items-center space-x-4">
-                                    <div v-if="logoPreview.company || mediaUrls.company.logo" class="relative w-24 h-24">
-                                        <img :src="logoPreview.company || mediaUrls.company.logo" alt="Logo preview" class="object-cover rounded-lg">
+                                    <div v-if="logoPreview.company || mediaUrls.company.logo"
+                                         class="relative w-24 h-24">
+                                        <img :src="logoPreview.company || mediaUrls.company.logo" alt="Logo preview"
+                                             class="object-cover rounded-lg">
                                         <button type="button" @click="removeLogo('company')"
                                                 class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M6 18L18 6M6 6l12 12"/>
                                             </svg>
                                         </button>
                                     </div>
@@ -65,29 +79,37 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Company Media</label>
                                 <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <div v-for="(preview, index) in mediaPreview.company" :key="'new-' + index" class="relative">
-                                        <img :src="preview" alt="Media preview" class="w-full h-32 object-cover rounded-lg">
+                                    <div v-for="(preview, index) in mediaPreview.company" :key="'new-' + index"
+                                         class="relative">
+                                        <img :src="preview" alt="Media preview"
+                                             class="w-full h-32 object-cover rounded-lg">
                                         <button type="button" @click="removeMedia('company', index)"
                                                 class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M6 18L18 6M6 6l12 12"/>
                                             </svg>
                                         </button>
                                     </div>
-                                    <div v-for="(url, index) in mediaUrls.company.media" :key="'existing-' + index" class="relative">
+                                    <div v-for="(url, index) in mediaUrls.company.media" :key="'existing-' + index"
+                                         class="relative">
                                         <img :src="url" alt="Media preview" class="w-full h-32 object-cover rounded-lg">
                                         <button type="button" @click="removeExistingMedia('company', index)"
                                                 class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M6 18L18 6M6 6l12 12"/>
                                             </svg>
                                         </button>
                                     </div>
-                                    <label class="border-2 border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-gray-400">
+                                    <label
+                                        class="border-2 border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-gray-400">
                                         <input type="file" @change="handleMediaUpload($event, 'company')"
                                                class="hidden" accept="image/*" multiple>
-                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M12 4v16m8-8H4"/>
                                         </svg>
                                     </label>
                                 </div>
@@ -112,7 +134,8 @@
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-md font-medium text-gray-900">Sub Company #{{ index + 1 }}</h3>
                         <button type="button" @click="removeSubCompany(index)"
-                                class="text-red-500 hover:text-red-700">Remove</button>
+                                class="text-red-500 hover:text-red-700">Remove
+                        </button>
                     </div>
 
                     <!-- Sub Company Fields -->
@@ -121,8 +144,9 @@
                         <!-- Include media handling similar to company section -->
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-gray-700">Company Name</label>
-                            <input type="text" v-model="subCompany.name" class="mt-1 block w-full rounded-md border-gray-300">
-<!--                            <div v-if="subCompany.errors.name" class="text-red-500 text-sm mt-1">{{ subCompany.errors.name }}</div>-->
+                            <input type="text" v-model="subCompany.name"
+                                   class="mt-1 block w-full rounded-md border-gray-300">
+                            <!--                            <div v-if="subCompany.errors.name" class="text-red-500 text-sm mt-1">{{ subCompany.errors.name }}</div>-->
                         </div>
                     </div>
 
@@ -158,8 +182,8 @@
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import {useForm} from '@inertiajs/vue3'
+import {ref} from 'vue'
 
 const props = defineProps({
     company: {
@@ -211,6 +235,29 @@ const form = useForm({
         }))
     }))
 })
+
+const submit = () => {
+    form.post(route('admin.companies.update', {company: props.company.id}), {
+        onSuccess: () => {
+            console.log("i am submitted");
+            // Clear all preview URLs to prevent memory leaks
+            Object.values(mediaPreview.value.company).forEach(URL.revokeObjectURL)
+            Object.values(mediaPreview.value.subCompanies).forEach(previews =>
+                previews.forEach(URL.revokeObjectURL)
+            )
+            Object.values(mediaPreview.value.branches).forEach(previews =>
+                previews.forEach(URL.revokeObjectURL)
+            )
+            if (logoPreview.value.company) URL.revokeObjectURL(logoPreview.value.company)
+            Object.values(logoPreview.value.subCompanies).forEach(preview => {
+                if (preview) URL.revokeObjectURL(preview)
+            })
+            Object.values(logoPreview.value.branches).forEach(preview => {
+                if (preview) URL.revokeObjectURL(preview)
+            })
+        }
+    })
+}
 
 // Preview state
 const logoPreview = ref({
