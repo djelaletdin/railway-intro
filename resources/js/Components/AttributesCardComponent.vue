@@ -3,7 +3,7 @@
 
         <div v-for="attribute in attributes"
              :key="attribute.id"
-             class="bg-railway rounded-2xl shadow px-10 py-6 ring-gray-200 ring-1 hover:shadow-lg transition-shadow w-72">
+             class="bg-railway rounded-2xl shadow px-10 py-6 ring-gray-200 ring-1 hover:shadow-lg transition-shadow w-48">
             <div class="inline-flex" >
                 <i :class="'text-white fa-2xl mt-4 ' + attribute.icon"></i>
             </div>
