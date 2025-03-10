@@ -78,6 +78,12 @@
                                            class="mt-1 block w-full" accept="image/*">
                                 </div>
                                 <div v-if="form.errors.logo" class="text-red-500 text-sm mt-1">{{ form.errors.logo }}</div>
+                                <div v-if="logoPreview.company" class="mt-2">
+                                    <label class="block text-sm font-medium text-gray-700">Logo Description</label>
+                                    <input type="text" v-model="form.logoDescriptions.company"
+                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                           placeholder="Enter logo description">
+                                </div>
                             </div>
 
                             <div>
@@ -85,6 +91,11 @@
                                 <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
                                     <div v-for="(preview, index) in mediaPreview.company" :key="index" class="relative">
                                         <img :src="preview" alt="Media preview" class="w-full h-32 object-cover rounded-lg">
+                                        <div class="mt-1">
+                                            <input type="text" v-model="form.mediaDescriptions.company[index]"
+                                                   class="w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                                   placeholder="Media description">
+                                        </div>
                                         <button type="button" @click="removeMedia('company', index)"
                                                 class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,12 +127,12 @@
             <!-- Sub Companies Section -->
             <div class="bg-white shadow sm:rounded-lg p-6 mb-6">
                 <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-medium text-gray-900">Sub Companies</h2>
-                <button type="button" @click="addSubCompany"
-                        class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700">
-                    Add Sub Company
-                </button>
-            </div>
+                    <h2 class="text-lg font-medium text-gray-900">Sub Companies</h2>
+                    <button type="button" @click="addSubCompany"
+                            class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700">
+                        Add Sub Company
+                    </button>
+                </div>
                 <div v-for="(subCompany, index) in form.subCompanies" :key="index" class="border rounded-lg p-4 mb-4">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-md font-medium">Sub Company {{ index + 1 }}</h3>
@@ -185,6 +196,12 @@
                                 <input type="file" @change="handleLogoUpload($event, 'subCompany', index)"
                                        class="mt-1 block w-full" accept="image/*">
                             </div>
+                            <div v-if="getSubCompanyLogoPreview(index)" class="mt-2">
+                                <label class="block text-sm font-medium text-gray-700">Logo Description</label>
+                                <input type="text" v-model="form.logoDescriptions.subCompanies[index]"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                       placeholder="Enter logo description">
+                            </div>
                         </div>
 
                         <div>
@@ -192,6 +209,11 @@
                             <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <div v-for="(preview, mediaIndex) in getSubCompanyMediaPreviews(index)" :key="mediaIndex" class="relative">
                                     <img :src="preview" alt="Media preview" class="w-full h-32 object-cover rounded-lg">
+                                    <div class="mt-1">
+                                        <input type="text" v-model="form.mediaDescriptions.subCompanies[index][mediaIndex]"
+                                               class="w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                               placeholder="Media description">
+                                    </div>
                                     <button type="button" @click="removeMedia('subCompany', index, mediaIndex)"
                                             class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -294,6 +316,12 @@
                                         <input type="file" @change="handleLogoUpload($event, 'branch', index, branchIndex)"
                                                class="mt-1 block w-full" accept="image/*">
                                     </div>
+                                    <div v-if="getBranchLogoPreview(index, branchIndex)" class="mt-2">
+                                        <label class="block text-sm font-medium text-gray-700">Logo Description</label>
+                                        <input type="text" v-model="form.logoDescriptions.branches[`${index}-${branchIndex}`]"
+                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                               placeholder="Enter logo description">
+                                    </div>
                                 </div>
 
                                 <div>
@@ -301,6 +329,11 @@
                                     <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <div v-for="(preview, mediaIndex) in getBranchMediaPreviews(index, branchIndex)" :key="mediaIndex" class="relative">
                                             <img :src="preview" alt="Media preview" class="w-full h-32 object-cover rounded-lg">
+                                            <div class="mt-1">
+                                                <input type="text" v-model="form.mediaDescriptions.branches[`${index}-${branchIndex}`][mediaIndex]"
+                                                       class="w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                                       placeholder="Media description">
+                                            </div>
                                             <button type="button" @click="removeMedia('branch', index, branchIndex, mediaIndex)"
                                                     class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -361,6 +394,17 @@ const form = useForm({
     media: [],
     subCompanies: [],
     attributes: [],
+    // Add descriptions for media
+    logoDescriptions: {
+        company: '',
+        subCompanies: {},
+        branches: {}
+    },
+    mediaDescriptions: {
+        company: [],
+        subCompanies: {},
+        branches: {}
+    }
 })
 
 const handleAttributesUpdate = (attributes) => {
@@ -393,18 +437,31 @@ const handleLogoUpload = (event, type, subCompanyIndex = null, branchIndex = nul
     if (type === 'company') {
         form.logo = file
         logoPreview.value.company = createPreviewURL(file)
+        // Initialize description if not already set
+        if (!form.logoDescriptions.company) {
+            form.logoDescriptions.company = ''
+        }
     } else if (type === 'subCompany') {
         form.subCompanies[subCompanyIndex].logo = file
         if (!logoPreview.value.subCompanies[subCompanyIndex]) {
             logoPreview.value.subCompanies[subCompanyIndex] = {}
         }
         logoPreview.value.subCompanies[subCompanyIndex] = createPreviewURL(file)
+        // Initialize description if not already set
+        if (!form.logoDescriptions.subCompanies[subCompanyIndex]) {
+            form.logoDescriptions.subCompanies[subCompanyIndex] = ''
+        }
     } else if (type === 'branch') {
         form.subCompanies[subCompanyIndex].branches[branchIndex].logo = file
         if (!logoPreview.value.branches[`${subCompanyIndex}-${branchIndex}`]) {
             logoPreview.value.branches[`${subCompanyIndex}-${branchIndex}`] = {}
         }
         logoPreview.value.branches[`${subCompanyIndex}-${branchIndex}`] = createPreviewURL(file)
+        // Initialize description if not already set
+        const branchKey = `${subCompanyIndex}-${branchIndex}`
+        if (!form.logoDescriptions.branches[branchKey]) {
+            form.logoDescriptions.branches[branchKey] = ''
+        }
     }
 }
 
@@ -412,12 +469,16 @@ const removeLogo = (type, subCompanyIndex = null, branchIndex = null) => {
     if (type === 'company') {
         form.logo = null
         logoPreview.value.company = null
+        form.logoDescriptions.company = ''
     } else if (type === 'subCompany') {
         form.subCompanies[subCompanyIndex].logo = null
         logoPreview.value.subCompanies[subCompanyIndex] = null
+        form.logoDescriptions.subCompanies[subCompanyIndex] = ''
     } else if (type === 'branch') {
         form.subCompanies[subCompanyIndex].branches[branchIndex].logo = null
         logoPreview.value.branches[`${subCompanyIndex}-${branchIndex}`] = null
+        const branchKey = `${subCompanyIndex}-${branchIndex}`
+        form.logoDescriptions.branches[branchKey] = ''
     }
 }
 
@@ -427,19 +488,26 @@ const handleMediaUpload = (event, type, subCompanyIndex = null, branchIndex = nu
     if (!files.length) return
 
     if (type === 'company') {
+        const startIndex = form.media.length
         form.media = [...(form.media || []), ...files]
         mediaPreview.value.company = [
             ...(mediaPreview.value.company || []),
             ...files.map(createPreviewURL)
         ]
+        // Initialize descriptions for new media
+        for (let i = 0; i < files.length; i++) {
+            form.mediaDescriptions.company[startIndex + i] = ''
+        }
     } else if (type === 'subCompany') {
         if (!form.subCompanies[subCompanyIndex].media) {
             form.subCompanies[subCompanyIndex].media = []
         }
+        const startIndex = form.subCompanies[subCompanyIndex].media.length
         form.subCompanies[subCompanyIndex].media = [
-            ...(form.subCompanies[subCompanyIndex].media || []),
+            ...form.subCompanies[subCompanyIndex].media,
             ...files
         ]
+
         if (!mediaPreview.value.subCompanies[subCompanyIndex]) {
             mediaPreview.value.subCompanies[subCompanyIndex] = []
         }
@@ -447,14 +515,24 @@ const handleMediaUpload = (event, type, subCompanyIndex = null, branchIndex = nu
             ...(mediaPreview.value.subCompanies[subCompanyIndex] || []),
             ...files.map(createPreviewURL)
         ]
+
+        // Initialize descriptions for new media
+        if (!form.mediaDescriptions.subCompanies[subCompanyIndex]) {
+            form.mediaDescriptions.subCompanies[subCompanyIndex] = []
+        }
+        for (let i = 0; i < files.length; i++) {
+            form.mediaDescriptions.subCompanies[subCompanyIndex][startIndex + i] = ''
+        }
     } else if (type === 'branch') {
         if (!form.subCompanies[subCompanyIndex].branches[branchIndex].media) {
             form.subCompanies[subCompanyIndex].branches[branchIndex].media = []
         }
+        const startIndex = form.subCompanies[subCompanyIndex].branches[branchIndex].media.length
         form.subCompanies[subCompanyIndex].branches[branchIndex].media = [
-            ...(form.subCompanies[subCompanyIndex].branches[branchIndex].media || []),
+            ...form.subCompanies[subCompanyIndex].branches[branchIndex].media,
             ...files
         ]
+
         const branchKey = `${subCompanyIndex}-${branchIndex}`
         if (!mediaPreview.value.branches[branchKey]) {
             mediaPreview.value.branches[branchKey] = []
@@ -463,109 +541,181 @@ const handleMediaUpload = (event, type, subCompanyIndex = null, branchIndex = nu
             ...(mediaPreview.value.branches[branchKey] || []),
             ...files.map(createPreviewURL)
         ]
+
+        // Initialize descriptions for new media
+        if (!form.mediaDescriptions.branches[branchKey]) {
+            form.mediaDescriptions.branches[branchKey] = []
+        }
+        for (let i = 0; i < files.length; i++) {
+            form.mediaDescriptions.branches[branchKey][startIndex + i] = ''
+        }
     }
 }
 
 const removeMedia = (type, subCompanyIndex = null, branchIndex = null, mediaIndex = null) => {
     if (type === 'company') {
+        // Remove the file from the form and preview
         form.media.splice(mediaIndex, 1)
         mediaPreview.value.company.splice(mediaIndex, 1)
+        form.mediaDescriptions.company.splice(mediaIndex, 1)
     } else if (type === 'subCompany') {
+        // For sub-company, remove media at specified index
         form.subCompanies[subCompanyIndex].media.splice(mediaIndex, 1)
         mediaPreview.value.subCompanies[subCompanyIndex].splice(mediaIndex, 1)
+        form.mediaDescriptions.subCompanies[subCompanyIndex].splice(mediaIndex, 1)
     } else if (type === 'branch') {
+        // For branch, remove media at specified index
         form.subCompanies[subCompanyIndex].branches[branchIndex].media.splice(mediaIndex, 1)
         const branchKey = `${subCompanyIndex}-${branchIndex}`
         mediaPreview.value.branches[branchKey].splice(mediaIndex, 1)
+        form.mediaDescriptions.branches[branchKey].splice(mediaIndex, 1)
     }
 }
 
-// Helper functions for getting previews
-const getSubCompanyLogoPreview = (index) => {
-    return logoPreview.value.subCompanies[index] || null
-}
-
-const getBranchLogoPreview = (subCompanyIndex, branchIndex) => {
-    return logoPreview.value.branches[`${subCompanyIndex}-${branchIndex}`] || null
-}
-
-const getSubCompanyMediaPreviews = (index) => {
-    return mediaPreview.value.subCompanies[index] || []
-}
-
-const getBranchMediaPreviews = (subCompanyIndex, branchIndex) => {
-    const branchKey = `${subCompanyIndex}-${branchIndex}`
-    return mediaPreview.value.branches[branchKey] || []
-}
-
-// Add new sub-company
+// Helper functions for sub-companies
 const addSubCompany = () => {
     form.subCompanies.push({
         name: '',
         description: '',
-        content: '',
         website: '',
         email: '',
         phone: '',
         address: '',
         logo: null,
         media: [],
-        branches: [],
-        attributes: []
+        branches: []
+    })
+
+    // Initialize media descriptions storage
+    const index = form.subCompanies.length - 1
+    if (!form.mediaDescriptions.subCompanies[index]) {
+        form.mediaDescriptions.subCompanies[index] = []
+    }
+}
+
+const removeSubCompany = (index) => {
+    form.subCompanies.splice(index, 1)
+
+    // Clean up previews and descriptions
+    if (logoPreview.value.subCompanies[index]) {
+        delete logoPreview.value.subCompanies[index]
+    }
+    if (mediaPreview.value.subCompanies[index]) {
+        delete mediaPreview.value.subCompanies[index]
+    }
+    if (form.logoDescriptions.subCompanies[index]) {
+        delete form.logoDescriptions.subCompanies[index]
+    }
+    if (form.mediaDescriptions.subCompanies[index]) {
+        delete form.mediaDescriptions.subCompanies[index]
+    }
+
+    // Clean up branch data
+    Object.keys(logoPreview.value.branches || {}).forEach(key => {
+        if (key.startsWith(`${index}-`)) {
+            delete logoPreview.value.branches[key]
+        }
+    })
+    Object.keys(mediaPreview.value.branches || {}).forEach(key => {
+        if (key.startsWith(`${index}-`)) {
+            delete mediaPreview.value.branches[key]
+        }
+    })
+    Object.keys(form.logoDescriptions.branches || {}).forEach(key => {
+        if (key.startsWith(`${index}-`)) {
+            delete form.logoDescriptions.branches[key]
+        }
+    })
+    Object.keys(form.mediaDescriptions.branches || {}).forEach(key => {
+        if (key.startsWith(`${index}-`)) {
+            delete form.mediaDescriptions.branches[key]
+        }
     })
 }
 
-// Add new branch to sub-company
+// Helper functions for branches
 const addBranch = (subCompanyIndex) => {
     if (!form.subCompanies[subCompanyIndex].branches) {
         form.subCompanies[subCompanyIndex].branches = []
     }
+
     form.subCompanies[subCompanyIndex].branches.push({
         name: '',
         description: '',
-        address: '',
-        phone: '',
         email: '',
+        manager_name: '',
+        phone: '',
+        address: '',
+        latitude: null,
+        longitude: null,
         logo: null,
         media: []
     })
+
+    // Initialize storage for media descriptions
+    const branchIndex = form.subCompanies[subCompanyIndex].branches.length - 1
+    const branchKey = `${subCompanyIndex}-${branchIndex}`
+    if (!form.mediaDescriptions.branches[branchKey]) {
+        form.mediaDescriptions.branches[branchKey] = []
+    }
 }
 
-// Remove sub-company
-const removeSubCompany = (index) => {
-    form.subCompanies.splice(index, 1)
-    delete logoPreview.value.subCompanies[index]
-    delete mediaPreview.value.subCompanies[index]
-}
-
-// Remove branch
 const removeBranch = (subCompanyIndex, branchIndex) => {
     form.subCompanies[subCompanyIndex].branches.splice(branchIndex, 1)
+
+    // Clean up previews and descriptions
     const branchKey = `${subCompanyIndex}-${branchIndex}`
-    delete logoPreview.value.branches[branchKey]
-    delete mediaPreview.value.branches[branchKey]
+    if (logoPreview.value.branches[branchKey]) {
+        delete logoPreview.value.branches[branchKey]
+    }
+    if (mediaPreview.value.branches[branchKey]) {
+        delete mediaPreview.value.branches[branchKey]
+    }
+    if (form.logoDescriptions.branches[branchKey]) {
+        delete form.logoDescriptions.branches[branchKey]
+    }
+    if (form.mediaDescriptions.branches[branchKey]) {
+        delete form.mediaDescriptions.branches[branchKey]
+    }
 }
 
-// Form submission
+// Helper methods for accessing nested logo and media previews
+const getSubCompanyLogoPreview = (index) => {
+    return logoPreview.value.subCompanies[index] || null
+}
+
+const getSubCompanyMediaPreviews = (index) => {
+    return mediaPreview.value.subCompanies[index] || []
+}
+
+const getBranchLogoPreview = (subCompanyIndex, branchIndex) => {
+    const key = `${subCompanyIndex}-${branchIndex}`
+    return logoPreview.value.branches[key] || null
+}
+
+const getBranchMediaPreviews = (subCompanyIndex, branchIndex) => {
+    const key = `${subCompanyIndex}-${branchIndex}`
+    return mediaPreview.value.branches[key] || []
+}
+
+// Submit form
 const submit = () => {
     form.post(route('admin.companies.store'), {
+        forceFormData: true,
+        preserveScroll: true,
         onSuccess: () => {
-            console.log("i am submitted");
-            // Clear all preview URLs to prevent memory leaks
-            Object.values(mediaPreview.value.company).forEach(URL.revokeObjectURL)
-            Object.values(mediaPreview.value.subCompanies).forEach(previews =>
-                previews.forEach(URL.revokeObjectURL)
-            )
-            Object.values(mediaPreview.value.branches).forEach(previews =>
-                previews.forEach(URL.revokeObjectURL)
-            )
-            if (logoPreview.value.company) URL.revokeObjectURL(logoPreview.value.company)
-            Object.values(logoPreview.value.subCompanies).forEach(preview => {
-                if (preview) URL.revokeObjectURL(preview)
-            })
-            Object.values(logoPreview.value.branches).forEach(preview => {
-                if (preview) URL.revokeObjectURL(preview)
-            })
+            // Reset form and previews after successful submission
+            form.reset()
+            logoPreview.value = {
+                company: null,
+                subCompanies: {},
+                branches: {}
+            }
+            mediaPreview.value = {
+                company: [],
+                subCompanies: {},
+                branches: {}
+            }
         }
     })
 }

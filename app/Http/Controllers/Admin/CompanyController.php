@@ -32,6 +32,8 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
 
+//        dd($request);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -110,7 +112,7 @@ class CompanyController extends Controller
                         'file_type' => $mediaFile->getMimeType(),
                         'file_size' => $mediaFile->getSize(),
                         'title' => $company->name . ' Media ' . ($index + 1),
-                        'description' => 'Company\'s Media',
+                        'description' => $request->input('mediaDescriptions.company.' . $index, ''),
                         'order' => $index + 2,
                         'type' => 'media'
                     ]);

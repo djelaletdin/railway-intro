@@ -137,8 +137,8 @@ onUnmounted(() => {
                 <!-- Two-column layout with dynamic stickiness -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative mt-4">
                     <!-- Main Content Column (Left) -->
-                    <div ref="leftColumn" class="order-2 md:order-1">
-                        <div ref="leftWrapper" class="md:sticky" style="top: 2rem;">
+                    <div ref="leftColumn" class="order-2 md:order-1 h-min">
+                        <div ref="leftWrapper" class="h-min" style="top: 2rem;">
                             <span class="font-black text-3xl md:text-4xl text-black mb-4 md:mb-8 block">
                                 {{ company.name }}
                             </span>
@@ -168,8 +168,8 @@ onUnmounted(() => {
                     </div>
 
                     <!-- Photos Column (Right) -->
-                    <div ref="rightColumn" class="order-1 md:order-2">
-                        <div ref="rightWrapper" class="md:sticky" style="top: 2rem;">
+                    <div ref="rightColumn" class="order-1 md:order-2 ">
+                        <div ref="rightWrapper" class="h-min" style="top: 2rem;">
                             <div class="grid grid-cols-1 gap-4 md:gap-6">
                                 <div v-for="(image, index) in media" :key="index" class="aspect-w-16 aspect-h-9 mb-4 md:mb-6">
                                     <img :src="image" class="w-full h-full object-cover rounded" alt="Company Image" />
